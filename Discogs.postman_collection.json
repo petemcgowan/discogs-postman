@@ -1,0 +1,660 @@
+{
+	"info": {
+		"_postman_id": "5f8e3953-9e96-4c92-aafb-580a728286d3",
+		"name": "Discogs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Rick Request (no keys)",
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.discogs.com/releases/249504",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"releases",
+						"249504"
+					]
+				},
+				"description": "This should return Rick Astley.  Doesn't need authentication but I think it's in there?"
+			},
+			"response": []
+		},
+		{
+			"name": "Request Token (step 2)",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{consumerSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "{{consumerKey}}",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "{{DEUserAgent}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.discogs.com/oauth/request_token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"request_token"
+					]
+				},
+				"description": "GET https://api.discogs.com/oauth/request_token\nInclude the following headers with your request:\n\nContent-Type: application/x-www-form-urlencoded\nAuthorization:\n        OAuth oauth_consumer_key=\"your_consumer_key\",\n        oauth_nonce=\"random_string_or_timestamp\",\n        oauth_signature=\"your_consumer_secret&\",\n        oauth_signature_method=\"PLAINTEXT\",\n        oauth_timestamp=\"current_timestamp\",\n        oauth_callback=\"your_callback\"\nUser-Agent: some_user_agent\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Access Token (step 4)",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "verifier",
+							"value": "{{oauth_verifier}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{consumerSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "disableHeaderEncoding",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "tokenSecret",
+							"value": "{{oauth_token_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "token",
+							"value": "{{oauth_token}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "{{consumerKey}}",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "{{DEUserAgent}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "oauth_verifier",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.discogs.com/oauth/access_token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"access_token"
+					]
+				},
+				"description": "POST https://api.discogs.com/oauth/access_token\nInclude the following headers in your request:\n\nContent-Type: application/x-www-form-urlencoded\nAuthorization:\n        OAuth oauth_consumer_key=\"your_consumer_key\",\n        oauth_nonce=\"random_string_or_timestamp\",\n        oauth_token=\"oauth_token_received_from_step_2\"\n        oauth_signature=\"your_consumer_secret&\",\n        oauth_signature_method=\"PLAINTEXT\",\n        oauth_timestamp=\"current_timestamp\",\n        oauth_verifier=\"users_verifier\"\nUser-Agent: some_user_agent\n\nIf the OAuth access token is not created within 15 minutes of when you receive the OAuth request token, your OAuth request token and verifier will expire, and you will need to re-create them. If you try to POST to the access token URL with an expired verifier or your request is malformed, you will receive an HTTP 400 Bad Request response."
+			},
+			"response": []
+		},
+		{
+			"name": "Oauth Identity (step 5)",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "{{access_token_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{consumerSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "{{consumerKey}}",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "{{DEUserAgent}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.discogs.com/oauth/identity",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"identity"
+					]
+				},
+				"description": " Be sure to attach the user’s OAuth access token and OAuth access token secret to each request.\n\nTo test that you are ready to send authenticated requests, send a GET request to the identity URL. A successful request will yield a response that contains information about the authenticated user.\n\nGET https://api.discogs.com/oauth/identity"
+			},
+			"response": []
+		},
+		{
+			"name": "Label get Releases",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "{{access_token_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{consumerSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "{{consumerKey}}",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "{{DEUserAgent}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.discogs.com/database/search?year=2020-2021&label=Toy Tonics",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"database",
+						"search"
+					],
+					"query": [
+						{
+							"key": "artist",
+							"value": "AC",
+							"disabled": true
+						},
+						{
+							"key": "release_title",
+							"value": "Black",
+							"disabled": true
+						},
+						{
+							"key": "year",
+							"value": "2020-2021"
+						},
+						{
+							"key": "label",
+							"value": "Toy Tonics"
+						}
+					]
+				},
+				"description": " Be sure to attach the user’s OAuth access token and OAuth access token secret to each request.\n\nTo test that you are ready to send authenticated requests, send a GET request to the identity URL. A successful request will yield a response that contains information about the authenticated user.\n\nGET https://api.discogs.com/oauth/identity"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Using Auth Validation (Name, Artist)",
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "{{access_token_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{consumerSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "{{consumerKey}}",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.discogs.com/database/search?release_title=nevermind&artist=nirvana&per_page=3&page=1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"database",
+						"search"
+					],
+					"query": [
+						{
+							"key": "release_title",
+							"value": "nevermind"
+						},
+						{
+							"key": "artist",
+							"value": "nirvana"
+						},
+						{
+							"key": "per_page",
+							"value": "3"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "You can't use search endpoint without being authenticated.  This validates that I can perform the search endpoint.\n\n/database/search?q={query}&{?type,title,release_title,credit,artist,anv,label,genre,style,country,year,format,catno,barcode,track,submitter,contributor}\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Label search (with authentication)",
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "{{access_token_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{consumerSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "{{consumerKey}}",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "PLAINTEXT",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.discogs.com/database/search?year=2020&label=Toy Tonics&per_page=100&page=1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"database",
+						"search"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2020"
+						},
+						{
+							"key": "label",
+							"value": "Toy Tonics"
+						},
+						{
+							"key": "per_page",
+							"value": "100"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Label search (with authentication)\n\n\n\nThe \"Release list\" data is pulled from Discogs (JSON?), based on a **3rd list of search terms** (artists and/or labels).  This is really a list of string comparisons, that I run \"weekly\" (or manually).\n\n/database/search?q={query}&{?type,title,release_title,credit,artist,anv,label,genre,style,country,year,format,catno,barcode,track,submitter,contributor}"
+			},
+			"response": []
+		},
+		{
+			"name": "Madlib Pure Https Get (no headers)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.discogs.com/database/search?q=Madlib&key={{consumerKey}}&secret={{consumerSecret}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"database",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Madlib"
+						},
+						{
+							"key": "key",
+							"value": "{{consumerKey}}"
+						},
+						{
+							"key": "secret",
+							"value": "{{consumerSecret}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Release by ID (Get, no headers)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.discogs.com/releases/19111921?key={{consumerKey}}&secret={{consumerSecret}}   ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"discogs",
+						"com"
+					],
+					"path": [
+						"releases",
+						"19111921"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{consumerKey}}"
+						},
+						{
+							"key": "secret",
+							"value": "{{consumerSecret}}   "
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
